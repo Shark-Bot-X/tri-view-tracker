@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { CSVUploader } from "@/components/CSVUploader";
 import { FeedbackCard } from "@/components/FeedbackCard";
 import { useFeedback } from "@/contexts/FeedbackContext";
 
@@ -13,6 +12,10 @@ const Home = () => {
     item.feedback_id.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const completedFeedback = filteredData.filter(item => item.task === "completed");
+  const notCompletedFeedback = filteredData.filter(item => item.task === "not_completed");
+  const ongoingFeedback = filteredData.filter(item => item.task === "ongoing");
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -22,7 +25,6 @@ const Home = () => {
             Manage and track all feedback items
           </p>
         </div>
-        <CSVUploader />
       </div>
 
       {feedbackData.length === 0 ? (
@@ -32,7 +34,7 @@ const Home = () => {
           </div>
           <h2 className="text-xl font-semibold mb-2">No feedback data</h2>
           <p className="text-muted-foreground mb-6">
-            Upload a CSV file to get started
+            Connect your backend to load feedback data
           </p>
         </div>
       ) : (
@@ -47,15 +49,59 @@ const Home = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredData.map((feedback) => (
-              <FeedbackCard key={feedback.feedback_id} feedback={feedback} />
-            ))}
-          </div>
-
-          {filteredData.length === 0 && searchQuery && (
+          {filteredData.length === 0 && searchQuery ? (
             <div className="text-center py-10 text-muted-foreground">
               No feedback found matching "{searchQuery}"
+            </div>
+          ) : (
+            <div className="space-y-8">
+              {/* Not Completed Section */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-destructive"></div>
+                  <h2 className="text-xl font-semibold">Not Completed ({notCompletedFeedback.length})</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {notCompletedFeedback.map((feedback) => (
+                    <FeedbackCard key={feedback.feedback_id} feedback={feedback} />
+                  ))}
+                </div>
+                {notCompletedFeedback.length === 0 && (
+                  <p className="text-muted-foreground text-center py-4">No not completed items</p>
+                )}
+              </div>
+
+              {/* Ongoing Section */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-accent"></div>
+                  <h2 className="text-xl font-semibold">Ongoing ({ongoingFeedback.length})</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {ongoingFeedback.map((feedback) => (
+                    <FeedbackCard key={feedback.feedback_id} feedback={feedback} />
+                  ))}
+                </div>
+                {ongoingFeedback.length === 0 && (
+                  <p className="text-muted-foreground text-center py-4">No ongoing items</p>
+                )}
+              </div>
+
+              {/* Completed Section */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-success"></div>
+                  <h2 className="text-xl font-semibold">Completed ({completedFeedback.length})</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {completedFeedback.map((feedback) => (
+                    <FeedbackCard key={feedback.feedback_id} feedback={feedback} />
+                  ))}
+                </div>
+                {completedFeedback.length === 0 && (
+                  <p className="text-muted-foreground text-center py-4">No completed items</p>
+                )}
+              </div>
             </div>
           )}
         </>
