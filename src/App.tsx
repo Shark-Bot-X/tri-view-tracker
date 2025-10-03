@@ -14,6 +14,7 @@ import UrgentIssues from "./pages/UrgentIssues";
 import FeedbackList from "./pages/FeedbackList";
 import WeeklyReport from "./pages/WeeklyReport";
 import NotFound from "./pages/NotFound";
+import Profile from './pages/profile';
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
                     <Route path="/feedback" element={<FeedbackList />} />
                     <Route path="/weekly" element={<WeeklyReport />} />
                     <Route path="*" element={<NotFound />} />
+                    <Route path="/profile" element={<Profile />} />
                   </Routes>
                 </main>
               </div>
