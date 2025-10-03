@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { FeedbackProvider } from "@/contexts/FeedbackContext";
+import { ThemeProvider } from "next-themes";
 import Home from "./pages/Home";
 import Analytics from "./pages/Analytics";
 import AIInsights from "./pages/AIInsights";
@@ -18,30 +19,32 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <FeedbackProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <SidebarProvider>
-            <div className="flex min-h-screen w-full">
-              <AppSidebar />
-              <main className="flex-1 p-6 lg:p-8">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/analytics" element={<Analytics />} />
-                  <Route path="/ai" element={<AIInsights />} />
-                  <Route path="/urgent" element={<UrgentIssues />} />
-                  <Route path="/feedback" element={<FeedbackList />} />
-                  <Route path="/weekly" element={<WeeklyReport />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </main>
-            </div>
-          </SidebarProvider>
-        </BrowserRouter>
-      </FeedbackProvider>
-    </TooltipProvider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <TooltipProvider>
+        <FeedbackProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <SidebarProvider>
+              <div className="flex min-h-screen w-full">
+                <AppSidebar />
+                <main className="flex-1 p-6 lg:p-8">
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/analytics" element={<Analytics />} />
+                    <Route path="/ai" element={<AIInsights />} />
+                    <Route path="/urgent" element={<UrgentIssues />} />
+                    <Route path="/feedback" element={<FeedbackList />} />
+                    <Route path="/weekly" element={<WeeklyReport />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </main>
+              </div>
+            </SidebarProvider>
+          </BrowserRouter>
+        </FeedbackProvider>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

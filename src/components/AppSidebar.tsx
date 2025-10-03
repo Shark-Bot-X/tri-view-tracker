@@ -1,5 +1,6 @@
-import { Home, BarChart3, Sparkles, AlertTriangle, Filter, Calendar } from "lucide-react";
+import { Home, BarChart3, Sparkles, AlertTriangle, Filter, Calendar, Moon, Sun } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useTheme } from "next-themes";
 import {
   Sidebar,
   SidebarContent,
@@ -9,7 +10,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
 
 const menuItems = [
   { title: "Home", url: "/", icon: Home },
@@ -21,6 +24,8 @@ const menuItems = [
 ];
 
 export function AppSidebar() {
+  const { theme, setTheme } = useTheme();
+
   return (
     <Sidebar className="border-r border-sidebar-border">
       <SidebarContent>
@@ -54,6 +59,29 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      
+      <SidebarFooter>
+        <div className="px-4 py-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="w-full justify-start gap-2"
+          >
+            {theme === "dark" ? (
+              <>
+                <Sun className="h-4 w-4" />
+                <span>Light Mode</span>
+              </>
+            ) : (
+              <>
+                <Moon className="h-4 w-4" />
+                <span>Dark Mode</span>
+              </>
+            )}
+          </Button>
+        </div>
+      </SidebarFooter>
     </Sidebar>
   );
 }

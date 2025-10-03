@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Sparkles, Brain, StickyNote } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,7 +8,6 @@ import { useFeedback } from "@/contexts/FeedbackContext";
 import { useToast } from "@/hooks/use-toast";
 
 const AIInsights = () => {
-  const [apiKey, setApiKey] = useState("");
   const [globalNotes, setGlobalNotes] = useState("");
   const { feedbackData } = useFeedback();
   const { toast } = useToast();
@@ -29,29 +27,6 @@ const AIInsights = () => {
           Get intelligent recommendations and assistance
         </p>
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-primary" />
-            Gemini API Configuration
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex gap-2">
-            <Input
-              type="password"
-              placeholder="Enter your Gemini API key..."
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-            />
-            <Button>Save Key</Button>
-          </div>
-          <p className="text-sm text-muted-foreground mt-2">
-            Your API key is stored locally and never shared
-          </p>
-        </CardContent>
-      </Card>
 
       <Tabs defaultValue="summary" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
@@ -128,7 +103,7 @@ const AIInsights = () => {
 
               <div className="mt-6 p-4 bg-primary/5 border border-primary/20 rounded-lg">
                 <p className="text-sm text-muted-foreground">
-                  AI assistance will be available once you configure your Gemini API key above.
+                  AI assistance features coming soon.
                 </p>
               </div>
             </CardContent>
